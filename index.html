@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ayaya GIF Video with Sound</title>
+  <title>Signature Confirmation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       background: #111;
@@ -18,43 +19,72 @@
     }
     .container {
       text-align: center;
-    }
-    video {
-      max-width: 100%;
-      height: auto;
-      display: block;
+      background: #222;
+      border-radius: 18px;
+      padding: 36px 24px 36px 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      max-width: 400px;
       margin: 0 auto;
+    }
+    .prompt {
+      font-size: 1.22rem;
+      margin-bottom: 22px;
+      margin-top: 12px;
+      color: #eee;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: #90ee90;
+      border-radius: 6px;
+    }
+    .tap-instruction {
+      margin-top: 20px;
+      color: #bbb;
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+    .signature {
+      font-family: 'Pacifico', cursive;
+      color: #90ee90;
+      font-size: 2rem;
+      margin-top: 40px;
+      text-align: right;
+      width: 90vw;
+      max-width: 400px;
+      letter-spacing: 2px;
+      user-select: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Ayaya Special!</h1>
-    <video id="video" src="ayayagif.mp4" autoplay muted playsinline loop></video>
-    <audio id="audio" src="ayaya2.webm" autoplay></audio>
+    <div class="prompt">
+      Tick this box to confirm signature and agreement of terms and conditions
+    </div>
+    <label class="checkbox-label">
+      <input type="checkbox" id="signature-checkbox">
+      I agree
+    </label>
+    <div class="tap-instruction">Tap anywhere to play sound</div>
+    <audio id="audio" src="ayaya2.webm"></audio>
+    <div class="signature">Lyssadela</div>
   </div>
   <script>
-    // Unmute the video if you want the video's original audio as well
-    document.getElementById('video').muted = true; // Set to false if you want video's audio
-
-    // Try to keep video and audio in sync on autoplay
-    const video = document.getElementById('video');
     const audio = document.getElementById('audio');
-
-    function playBoth() {
-      video.play();
+    document.body.addEventListener('click', function() {
       audio.play();
-    }
-
-    video.onplay = () => {
-      if (audio.paused) audio.play();
-    };
-    audio.onplay = () => {
-      if (video.paused) video.play();
-    };
-
-    // For browsers that block autoplay with sound, play both on user interaction
-    document.body.addEventListener('click', playBoth, { once: true });
+    }, { once: true });
   </script>
 </body>
 </html>
