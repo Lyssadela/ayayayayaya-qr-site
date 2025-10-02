@@ -25,7 +25,6 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       max-width: 400px;
       margin: 0 auto;
-      position: relative;
     }
     .main-media {
       margin: 20px 0 20px 0;
@@ -98,6 +97,7 @@
 </head>
 <body>
   <div class="container">
+    <!-- Use <img src="ayayagif.gif" ...> for a GIF, or <video ...> for a video -->
     <video id="mainMedia" class="main-media" src="ayayagif.mp4" loop muted playsinline></video>
     <audio id="audio" src="ayaya2.webm"></audio>
 
@@ -118,21 +118,21 @@
     const agreeBtn = document.getElementById('agreeBtn');
     let revealed = false;
 
+    // Enable/disable button based on checkbox
     checkbox.addEventListener('change', function() {
       agreeBtn.disabled = !checkbox.checked;
     });
 
+    // Only trigger on button click (best for mobile)
     agreeBtn.addEventListener('click', function() {
       if (revealed) return;
       revealed = true;
       mainMedia.classList.add('visible');
-      mainMedia.play();
+      // For video:
+      if (typeof mainMedia.play === "function") mainMedia.play();
       audio.play();
       agreeBtn.disabled = true;
     });
-  </script>
-</body>
-</html>
   </script>
 </body>
 </html>
