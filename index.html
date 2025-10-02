@@ -27,24 +27,6 @@
       margin: 0 auto;
       position: relative;
     }
-    .tap-me {
-      font-size: 2.6rem;
-      color: #90ee90;
-      margin-bottom: 32px;
-      font-weight: bold;
-      cursor: pointer;
-      letter-spacing: 2px;
-      transition: opacity 0.4s;
-      user-select: none;
-    }
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
-      height: 0;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
     .main-media {
       margin: 20px 0 20px 0;
       display: none;
@@ -93,13 +75,29 @@
       letter-spacing: 2px;
       user-select: none;
     }
+    .agree-btn {
+      background: #90ee90;
+      color: #222;
+      border: none;
+      padding: 10px 26px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .agree-btn:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div id="tapMe" class="tap-me">Tap me!</div>
-
-    <!-- Replace with <img src="ayayagif.gif" ...> for a GIF instead of video -->
     <video id="mainMedia" class="main-media" src="ayayagif.mp4" loop muted playsinline></video>
     <audio id="audio" src="ayaya2.webm"></audio>
 
@@ -110,35 +108,31 @@
       <input type="checkbox" id="signature-checkbox">
       I agree
     </label>
+    <button id="agreeBtn" class="agree-btn" disabled>Agree</button>
     <div class="signature">Lyssadela</div>
   </div>
   <script>
-    const tapMe = document.getElementById('tapMe');
     const mainMedia = document.getElementById('mainMedia');
     const audio = document.getElementById('audio');
     const checkbox = document.getElementById('signature-checkbox');
-
+    const agreeBtn = document.getElementById('agreeBtn');
     let revealed = false;
-    function revealAndPlay() {
+
+    checkbox.addEventListener('change', function() {
+      agreeBtn.disabled = !checkbox.checked;
+    });
+
+    agreeBtn.addEventListener('click', function() {
       if (revealed) return;
       revealed = true;
-      tapMe.classList.add('hidden');
       mainMedia.classList.add('visible');
       mainMedia.play();
       audio.play();
-    }
-
-    tapMe.addEventListener('click', revealAndPlay, { once: true });
-    document.querySelector('.container').addEventListener('click', function(e) {
-      if (!mainMedia.classList.contains('visible') && !e.target.matches('input[type="checkbox"], label')) {
-        revealAndPlay();
-      }
-    }, { once: true });
-    checkbox.addEventListener('change', function() {
-      if (checkbox.checked && !mainMedia.classList.contains('visible')) {
-        revealAndPlay();
-      }
+      agreeBtn.disabled = true;
     });
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
