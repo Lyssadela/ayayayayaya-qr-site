@@ -116,8 +116,12 @@
     const tapMe = document.getElementById('tapMe');
     const mainMedia = document.getElementById('mainMedia');
     const audio = document.getElementById('audio');
+    const checkbox = document.getElementById('signature-checkbox');
 
+    let revealed = false;
     function revealAndPlay() {
+      if (revealed) return;
+      revealed = true;
       tapMe.classList.add('hidden');
       mainMedia.classList.add('visible');
       mainMedia.play();
@@ -125,12 +129,16 @@
     }
 
     tapMe.addEventListener('click', revealAndPlay, { once: true });
-    // Optional: allow tapping anywhere inside the container to trigger as well
     document.querySelector('.container').addEventListener('click', function(e) {
       if (!mainMedia.classList.contains('visible') && !e.target.matches('input[type="checkbox"], label')) {
         revealAndPlay();
       }
     }, { once: true });
+    checkbox.addEventListener('change', function() {
+      if (checkbox.checked && !mainMedia.classList.contains('visible')) {
+        revealAndPlay();
+      }
+    });
   </script>
 </body>
 </html>
