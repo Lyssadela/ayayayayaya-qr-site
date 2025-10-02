@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ayaya GIF with Sound</title>
+  <title>Ayaya GIF Video with Sound</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -19,26 +19,42 @@
     .container {
       text-align: center;
     }
-    img {
+    video {
       max-width: 100%;
       height: auto;
+      display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Ayaya Special!</h1>
-    <img src="ayaya.gif" alt="Ayaya GIF">
-    <audio id="audio" autoplay>
-      <source src="ayaya2.webm" type="audio/webm">
-      Your browser does not support the audio element.
-    </audio>
+    <video id="video" src="ayayagif.mp4" autoplay muted playsinline loop></video>
+    <audio id="audio" src="ayaya2.webm" autoplay></audio>
   </div>
   <script>
-    // Try to auto-play audio if browser blocks it until user interaction
-    document.body.addEventListener('click', function() {
-      document.getElementById('audio').play();
-    }, { once: true });
+    // Unmute the video if you want the video's original audio as well
+    document.getElementById('video').muted = true; // Set to false if you want video's audio
+
+    // Try to keep video and audio in sync on autoplay
+    const video = document.getElementById('video');
+    const audio = document.getElementById('audio');
+
+    function playBoth() {
+      video.play();
+      audio.play();
+    }
+
+    video.onplay = () => {
+      if (audio.paused) audio.play();
+    };
+    audio.onplay = () => {
+      if (video.paused) video.play();
+    };
+
+    // For browsers that block autoplay with sound, play both on user interaction
+    document.body.addEventListener('click', playBoth, { once: true });
   </script>
 </body>
 </html>
